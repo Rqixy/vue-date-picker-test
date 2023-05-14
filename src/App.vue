@@ -3,44 +3,51 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 
 import { ref } from 'vue';
+import { format } from 'date-fns'
 
 const date = ref(new Date());
+const formatDate = (date) => {
+  return format(date, 'yyyy/M/d')
+}
 </script>
 
 <template>
   <VueDatePicker
     v-model="date"
     locale="jp"
-    select-text="選択"
+    select-text="選択する"
     cancel-text="キャンセル"
-    format="yyyy年MM月dd日"
-    disable-month-year-select
+    :enable-time-picker="false"
+    :format="formatDate"
     :clearable="false"
+    :min-date="new Date()"
+    no-today
   >
-    <!-- <template #input-icon>
-        <img class="input-slot-image" src="../public/icon.png"/>
-    </template> -->
+    <template #input-icon>
+        <img class="input-slot-image" src="../public/calendar.svg"/>
+    </template>
   </VueDatePicker>
 </template>
 
 <style scoped>
 :deep(.dp__input) {
   border-radius: 10px;
-  border: 10px solid pink;
+  border: 2px solid gray;
 }
 :deep(.dp__action_buttons) {
   flex: none;
 }
 :deep(.dp__input_icon) {
-  right: 0;
+  top: 60%;
+  right: 16px;
   left: auto;
 }
 :deep(.dp__input_icon_pad) {
   padding-left: 8px;
 }
 .input-slot-image {
-  height: 20px;
+  height: 24px;
   width: auto;
-  margin-left: 5px;
+  filter: invert(50%) sepia(0%) hue-rotate(231deg) brightness(0%) contrast(100%);
 }
 </style>
